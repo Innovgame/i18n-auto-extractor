@@ -1,6 +1,6 @@
 import md5 from 'js-md5';
 
-export const setCurrenLang=(lang,langMap)=>{
+export const setCurrentLang=(lang,langMap)=>{
     globalThis.__CURRENT_LANG_SET__ = {
         lang,
         langMap,

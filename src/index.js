@@ -1,1 +1,1 @@
-export {setCurrenLang,$at} from './translater'
+export {setCurrentLang,$at} from './translater'

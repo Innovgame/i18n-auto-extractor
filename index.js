@@ -28,7 +28,7 @@ async function prompt() {
       {
         type: "text",
         name: "fileType",
-        default: "vue|ts|js",
+        default: "vue|ts|js|jsx|tsx",
         message: "扫描的文件类型后缀：",
       },
       {

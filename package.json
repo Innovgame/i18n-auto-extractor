@@ -18,9 +18,31 @@
   "engines": {
     "node": ">=20.11.1"
   },
+  "files": ["dist"],
+  "homepage": "https://github.com/qianyuanjia/i18n-auto-extractor#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qianyuanjia/i18n-auto-extractor.git"
+  },
+  "exports":{
+    ".":{
+      "import":"./dist/esm/index.mjs",
+      "require":"./dist/cjs/index.cjs",
+      "unpkg": "./dist/umd/index.min.js"
+    },
+    "./vue":{
+      "import":"./dist/esm/vue.mjs",
+      "require":"./dist/cjs/vue.cjs"
+    },
+    "./react":{
+      "import":"./dist/esm/react.mjs",
+      "require":"./dist/cjs/react.cjs"
+    }
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build"
   },
   "author": "qyj-huanyue",
   "email": "1712030209@qq.com",

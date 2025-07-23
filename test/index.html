@@ -12,7 +12,7 @@
         textDisplay.textContent=window.i18nExtractor.$at('你好')
         setTimeout(()=>{
             fetch('./locales/en.json').then(res=>res.json()).then(enJson=>{
-                window.i18nExtractor.setCurrenLang('en',enJson)
+                window.i18nExtractor.setCurrentLang('en',enJson)
                 textDisplay.textContent=window.i18nExtractor.$at('你好')
             })
         },3000)
