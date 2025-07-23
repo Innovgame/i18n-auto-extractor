@@ -1,6 +1,6 @@
 <script setup>
-import {useVueAt} from '../../../src/vue'
-import {$at} from '../../../src/index'
+import {useVueAt} from 'i18n-auto-extractor/vue'
+import {$at} from 'i18n-auto-extractor'
 import enJSON from '../../locales/en'
 
 const {setCurrentLang}=useVueAt()
