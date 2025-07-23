@@ -1,0 +1,1 @@
+export {setCurrenLang,$at} from './translater'

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国际化中文翻译测试</title>
+</head>
+<body>
+    <div id="textDisplay"></div>
+    <script src="../dist/umd/index.min.js"></script>
+    <script type="module">
+        textDisplay.textContent=window.i18nExtractor.$at('你好')
+        setTimeout(()=>{
+            fetch('./locales/en.json').then(res=>res.json()).then(enJson=>{
+                window.i18nExtractor.setCurrenLang('en',enJson)
+                textDisplay.textContent=window.i18nExtractor.$at('你好')
+            })
+        },3000)
+    </script>
+</body>
+</html>
