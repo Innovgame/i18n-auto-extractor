@@ -1,4 +1,4 @@
-import {useReactAt} from '../../../src/react'
+import {useReactAt} from 'i18n-auto-extractor/react'
 import enJSON from '../../locales/en.json'
 import './App.css'
 

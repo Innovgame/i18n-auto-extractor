@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "i18n-auto-extractor": "^0.0.1",
+    "i18n-auto-extractor": "latest",
     "vue": "^3.5.17"
   },
   "devDependencies": {

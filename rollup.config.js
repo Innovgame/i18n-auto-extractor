@@ -72,4 +72,17 @@ export default [{
     },
   ],
   plugins,
+},
+{
+  input: 'index.js', // 入口文件
+  output: [
+    // CommonJS 格式 (Node.js)
+    {
+      dir: 'dist',
+      format: 'esm',
+      exports: 'auto', // 自动检测导出方式
+      entryFileNames: '[name].js',
+    },
+  ],
+  plugins:[],
 }];

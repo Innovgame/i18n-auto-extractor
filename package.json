@@ -1,6 +1,6 @@
 {
   "name": "i18n-auto-extractor",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "i18n-auto-extractor 是一个自动化国际化（i18n）工具，能够智能提取项目中的中文文本，并自动生成多种语言文件。支持与主流前端框架（Vue/React）集成，显著提升多语言开发效率。",
   "keywords": [
     "i18n",
@@ -13,8 +13,8 @@
     "plugin"
   ],
   "type": "module",
-  "main": "index.js",
-  "bin": "index.js",
+  "main": "./dist/index.js",
+  "bin": "./dist/index.js",
   "engines": {
     "node": ">=20.11.1"
   },
@@ -24,19 +24,22 @@
     "type": "git",
     "url": "git+https://github.com/qianyuanjia/i18n-auto-extractor.git"
   },
-  "exports":{
+   "exports":{
     ".":{
+      "browser": "./dist/umd/index.min.js",
       "import":"./dist/esm/index.mjs",
       "require":"./dist/cjs/index.cjs",
-      "unpkg": "./dist/umd/index.min.js"
+      "default":"./dist/esm/index.mjs"
     },
     "./vue":{
       "import":"./dist/esm/vue.mjs",
-      "require":"./dist/cjs/vue.cjs"
+      "require":"./dist/cjs/vue.cjs",
+       "default":"./dist/esm/vue.mjs"
     },
     "./react":{
       "import":"./dist/esm/react.mjs",
-      "require":"./dist/cjs/react.cjs"
+      "require":"./dist/cjs/react.cjs",
+      "default":"./dist/esm/react.mjs"
     }
   },
   "scripts": {
