@@ -1,6 +1,6 @@
 {
   "name": "i18n-auto-extractor",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "i18n-auto-extractor 是一个自动化国际化（i18n）工具，能够智能提取项目中的中文文本，并自动生成多种语言文件。支持与主流前端框架（Vue/React）集成，显著提升多语言开发效率。",
   "keywords": [
     "i18n",

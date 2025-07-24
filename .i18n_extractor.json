@@ -1,11 +1,9 @@
 {
   "langs": [
     "en",
-    "zh-TW",
-    "ab",
-    "ace"
+    "zh-TW"
   ],
-  "scanPath": "test",
+  "scanPath": "src",
   "fileType": "vue|ts|js|jsx|tsx",
   "localePath": "src/locales",
   "keyCount": 10
