@@ -1,6 +1,6 @@
 {
   "name": "i18n-auto-extractor",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "i18n-auto-extractor is an automated internationalization (i18n) tool that intelligently extracts Chinese text from projects and automatically generates files in multiple languages. It supports integration with mainstream front-end frameworks (Vue/React), significantly enhancing the efficiency of multilingual development.",
   "keywords": [
     "i18n",

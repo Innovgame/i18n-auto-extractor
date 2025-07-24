@@ -136,7 +136,7 @@ function App() {
 
 ## 🤝 交流与支持
 
-本工具已在公司内部多个Vue3项目中稳定运行，React支持相对较新。遇到问题欢迎在[GitHub Issues](https://github.com/your-repo/i18n-auto-extractor/issues)反馈。
+本工具已在公司内部多个Vue3项目中稳定运行，React支持相对较新。遇到问题欢迎在[GitHub Issues](https://github.com/qianyuanjia/i18n-auto-extractor/issues)反馈。
 
 ---
 
