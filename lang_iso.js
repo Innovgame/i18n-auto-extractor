@@ -1,7 +1,7 @@
 
 export const langIsoList = [
   {"name": "英语", "value": "en"},
-  {"name": "中文（繁体）", "value": "zh-TW (BCP-47)"},
+  {"name": "中文（繁体）", "value": "zh-TW"},
   {"name": "阿布哈兹语", "value": "ab"},
   {"name": "亚齐语", "value": "ace"},
   {"name": "阿乔利语", "value": "ach"},

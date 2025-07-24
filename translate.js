@@ -4,6 +4,7 @@ import path from 'node:path'
 import crypto from 'node:crypto'
 import chalk from 'chalk'
 import ora from 'ora'
+import { Translator } from 'google-translate-api-x';
 
 const getContentMd5 = (content,config) => {
     const hash = crypto.createHash('md5');
@@ -13,33 +14,9 @@ const getContentMd5 = (content,config) => {
 }
 
 const translate = (zhs,lang) => {
-    return fetch('https://translate-pa.googleapis.com/v1/translateHtml', {
-        headers: {
-            accept: '*/*',
-            'accept-language': 'zh-CN,zh;q=0.9',
-            'cache-control': 'no-cache',
-            'content-type': 'application/json+protobuf',
-            pragma: 'no-cache',
-            priority: 'u=1, i',
-            'sec-ch-ua': '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"macOS"',
-            'sec-fetch-dest': 'empty',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'cross-site',
-            'x-client-data':
-                'CJO2yQEIo7bJAQipncoBCN6FywEIlaHLAQjzossBCIagzQEIk8bOAQiHyc4BCIjMzgEYwcvMAQ==',
-            'x-goog-api-key': 'AIzaSyATBXajvzQLTDHEQbcpq0Ihe0vWDHmO520',
-            Referer: 'http://localhost:5173/',
-            'Referrer-Policy': 'strict-origin-when-cross-origin'
-        },
-        body: JSON.stringify([[zhs, 'zh-CN', lang], 'te']),
-        method: 'POST'
-    })
-        .then((res) => res.json())
-        .then((res) => {
-            return res?.[0] || []
-        })
+    const translator = new Translator({from: 'zh-CN', to: lang, forceBatch: false, tld: 'es'});
+    return translator.translate(zhs)
+        .then((res) =>res.map(item=>item.text))
 }
 
 
