@@ -1,12 +1,14 @@
-### i18n-auto-extractor
+## i18n-auto-extractor
 一款极轻量的i18n自动化解决方案工具，主要功能为自动提取项目中的中文，并翻译成多种语言，借助谷歌翻译接口，支持上百种语言。
 支持在react，vue甚至原生工程内使用。
 
 ### 使用方式
 1. 安装依赖包
+<br />
 ```npm i i18n-auto-extractor```
 
 2. 运行命令在项目根目录下自动生成配置文件".i18n_extractor.json"
+<br />
 ```npx i18n-auto-extractor```
 
 3. “.i18n_extractor.json”配置文件结构
@@ -95,11 +97,13 @@ import './App.css'
 
 function App() {
   // $at经过useCallback包裹，已经是响应式的了
-  const {setCurrentLang,$at}= useReactAt()
+   const {setCurrentLang,$at,langSet}= useReactAt()
 
-   setTimeout(() => {
+  useEffect(()=>{
+    setTimeout(() => {
       setCurrentLang('en',enJSON)
-  }, 3000);
+    }, 3000);
+  },[setCurrentLang])
 
   return (
     <>

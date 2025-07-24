@@ -1,11 +1,10 @@
 <script setup>
-import {useVueAt} from 'i18n-auto-extractor/vue'
-import {$at} from 'i18n-auto-extractor'
+// import {useVueAt} from 'i18n-auto-extractor/vue'
+import {useVueAt} from '../../../src/vue'
 import enJSON from '../../locales/en'
+import HelloWorld from './components/HelloWorld.vue'
 
-const {setCurrentLang}=useVueAt()
-
-setCurrentLang('zh',{})
+const {setCurrentLang,langSet}=useVueAt()
 
 setTimeout(() => {
   setCurrentLang('en',enJSON)
@@ -14,8 +13,10 @@ setTimeout(() => {
 
 <template>
   <div>
+    {{langSet.lang}}
    {{$at('你好')}}
   </div>
+  <HelloWorld />
 </template>
 
 <style scoped>
