@@ -1,6 +1,6 @@
 {
   "name": "i18n-auto-extractor",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "i18n-auto-extractor is an automated internationalization (i18n) tool that intelligently extracts Chinese text from projects and automatically generates files in multiple languages. It supports integration with mainstream front-end frameworks (Vue/React), significantly enhancing the efficiency of multilingual development.",
   "keywords": [
     "i18n",
@@ -31,17 +31,18 @@
       "browser": "./dist/umd/index.min.js",
       "import": "./dist/esm/index.mjs",
       "require": "./dist/cjs/index.cjs",
-      "default": "./dist/esm/index.mjs"
+      "default": "./dist/esm/index.mjs",
+      "types": "./dist/types/index.d.ts"
     },
     "./vue": {
       "import": "./dist/esm/vue.mjs",
       "require": "./dist/cjs/vue.cjs",
-      "default": "./dist/esm/vue.mjs"
+      "types": "./dist/types/vue.d.ts"
     },
     "./react": {
       "import": "./dist/esm/react.mjs",
       "require": "./dist/cjs/react.cjs",
-      "default": "./dist/esm/react.mjs"
+      "types": "./dist/types/react.d.ts"
     }
   },
   "scripts": {
@@ -63,6 +64,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "rollup": "^4.45.1",
     "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-node-resolve": "^5.2.0"
   }
 }

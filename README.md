@@ -26,7 +26,7 @@ yarn add i18n-auto-extractor
 ### 初始化配置
 
 ```bash
-npx i18n-auto-extractor init
+npx i18n-auto-extractor
 ```
 
 这将生成配置文件 `.i18n_extractor.json`：
@@ -70,6 +70,7 @@ $at('你好{x}', {x: 'Jan'})     // 带参数的文本
 
 ```vue
 <script setup>
+import { $at } from 'i18n-auto-extractor'
 import { useVueAt } from 'i18n-auto-extractor/vue'
 import enJSON from '@/locales/en'
 
