@@ -1,6 +1,7 @@
 <script setup>
 // import {useVueAt} from 'i18n-auto-extractor/vue'
 import {useVueAt} from '../../../src/vue'
+import {$at} from '../../../src'
 import enJSON from '../../locales/en'
 import HelloWorld from './components/HelloWorld.vue'
 
@@ -13,8 +14,11 @@ setTimeout(() => {
 
 <template>
   <div>
-    {{langSet.lang}}
-   {{$at('你好')}}
+    <div>{{langSet.lang}}</div>
+   <div>{{$at('你好')}}</div>
+   <div>{{$at('确定')}}</div>
+   <div>{{ $at('确定', { override: { en: 'ok' } }) }}</div>
+   <div>{{ $at('确定', { override: { en:'confirm' } }) }}</div>
   </div>
   <HelloWorld />
 </template>

@@ -12,8 +12,13 @@ export const $at = (zhText, options=undefined) => {
     const md5Str = md5(zhText).slice(0, 10);
     let text = langSet.langMap[md5Str] || zhText;
     if (options) {
+        if(options.override && options.override[langSet.lang]){
+            text = options.override[langSet.lang]
+        }
         Object.keys(options).forEach(key => {
-            text = text.replace(new RegExp(`\{\\s*${key}\\s*\}`, 'g'), options[key])
+            if(key !== 'override'){
+                text = text.replace(new RegExp(`\{\\s*${key}\\s*\}`, 'g'), options[key])
+            }
         })
     }
     return text
