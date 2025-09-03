@@ -14,7 +14,7 @@ const getContentMd5 = (content,config) => {
 }
 
 const translate = (zhs,lang) => {
-    const translator = new Translator({from: 'zh-CN', to: lang, forceBatch: false, tld: 'es'});
+    const translator = new Translator({from: 'zh-CN', to: lang, forceBatch: false});
     return translator.translate(zhs)
         .then((res) =>res.map(item=>item.text))
 }
