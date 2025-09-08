@@ -6,10 +6,18 @@ export const setCurrentLang=(lang,langMap)=>{
         langMap,
     };
 }
+
+function getFirstKey(obj) {
+  for (const key in obj) {
+    return key;
+  }
+}
+
 export const $at = (zhText, options=undefined) => {
     const langSet= globalThis.__CURRENT_LANG_SET__;
     if(!langSet || langSet.lang==='zh-CN' || !langSet.langMap) return zhText;
-    const md5Str = md5(zhText).slice(0, 10);
+    const key = getFirstKey(langSet.langMap) || ''
+    const md5Str =key? md5(zhText).slice(0, key.length): '';
     let text = langSet.langMap[md5Str] || zhText;
     if (options) {
         if(options.override && options.override[langSet.lang]){
