@@ -5,5 +5,6 @@
   "scanPath": "test",
   "fileType": "vue|ts|js|jsx|tsx",
   "localePath": "test/locales",
-  "keyCount": 10
+  "keyCount": 10,
+  "onlyExtract": false
 }

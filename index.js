@@ -44,6 +44,12 @@ async function prompt() {
         default: 10,
         message: "md5作为键截取前几位(过短可能导致键重复，最长32位)：",
       },
+      {
+        type: "confirm",
+        name: "onlyExtract",
+        default: false,
+        message: "是否只提取中文不翻译",
+      },
     ]);
     if(answer.langs.length===0){
        answer.langs.push('en') 

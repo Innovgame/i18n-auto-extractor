@@ -38,6 +38,18 @@ function ensureFileExists(filePath, content = '') {
   }
 }
 
+const extractZhText=(config)=>{
+    const i18nLocales = path.resolve(process.cwd(), config.localePath)
+    const zhJsonPath = path.join(i18nLocales, 'zh-CN.json')
+    ensureFileExists(zhJsonPath)
+    const nextzh = {}
+    for (const zh of zhSet) {
+        const key = getContentMd5(zh,config)
+        nextzh[key] = zh
+    }
+    fs.writeFileSync(zhJsonPath, JSON.stringify(nextzh, null, 2))
+}
+
 const updateLangFile = async (config,lang) => {
     const i18nLocales = path.resolve(process.cwd(), config.localePath)
     const zhJsonPath = path.join(i18nLocales, 'zh-CN.json')
@@ -62,10 +74,12 @@ const updateLangFile = async (config,lang) => {
         }
     }
     try {
-        const result = await translate(untranslates.map(t => t.zh),lang)
-        untranslates.forEach((item, index) => {
-            toJson[item.key] = result[index]
-        })
+        if(!config.onlyExtract){
+            const result = await translate(untranslates.map(t => t.zh),lang)
+            untranslates.forEach((item, index) => {
+                toJson[item.key] = result[index]
+            })
+        }
         const nextzh = {}
         const nexten = {}
         keys.forEach(key => {
@@ -97,7 +111,7 @@ function traverseDirectory(dir, callback) {
 }
 const spinner = ora();
 export async function startTranslate(config){
-     spinner.start("中文提取翻译中，请确保能科学上网...");
+    spinner.start(config.onlyExtract?"中文提取中...":"中文提取翻译中，请确保能科学上网...");
     traverseDirectory(path.resolve(process.cwd(), config.scanPath), (id) => {
     if (id.match(new RegExp(`\.(${config.fileType})$`))) {
             const code = fs.readFileSync(id, 'utf-8')
@@ -112,6 +126,6 @@ export async function startTranslate(config){
         await updateLangFile(config,config.langs[i])
     }
     spinner.stop();
-    console.log(chalk.greenBright('自动翻译完成～'))
+    console.log(chalk.greenBright('操作成功～'))
 }
 
