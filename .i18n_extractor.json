@@ -1,10 +1,16 @@
 {
   "langs": [
-    "en"
+    "en",
+    "az"
   ],
   "scanPath": "test",
   "fileType": "vue|ts|js|jsx|tsx",
   "localePath": "test/locales",
   "keyCount": 10,
-  "onlyExtract": false
+  "onlyExtract": false,
+  "translateBy": "baidu",
+  "baidu": {
+    "appid": "20241022002182439",
+    "secret": "54E2s423WiHcD7_qLOLx"
+  }
 }

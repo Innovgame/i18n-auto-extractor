@@ -51,6 +51,35 @@ async function prompt() {
         message: "是否只提取中文不翻译",
       },
     ]);
+    if(!answer.onlyExtract){
+      Object.assign(answer,await enquirer.prompt({
+        type: "select",
+        name: "translateBy",
+        required: true,
+        default: "google",
+        message: "选择翻译方式：",
+        choices:[
+          {name:'google',message:'谷歌翻译'},
+          {name:'baidu',message:'百度翻译'},
+        ]
+      }))
+      if(answer.translateBy==='baidu'){
+         Object.assign(answer,{
+          baidu:await enquirer.prompt([
+            {
+                type: "text",
+                name: "appid",
+                message: "百度翻译开放平台获取的APPID(https://api.fanyi.baidu.com/manage/developer):",
+            },
+             {
+                type: "text",
+                name: "secret",
+                message: "百度翻译api密钥:",
+            },
+          ])
+         })
+      }
+    }
     if(answer.langs.length===0){
        answer.langs.push('en') 
     }else{

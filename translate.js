@@ -4,7 +4,7 @@ import path from 'node:path'
 import crypto from 'node:crypto'
 import chalk from 'chalk'
 import ora from 'ora'
-import { Translator } from 'google-translate-api-x';
+import {getTranslator} from './translator.js'
 
 const getContentMd5 = (content,config) => {
     const hash = crypto.createHash('md5');
@@ -13,8 +13,8 @@ const getContentMd5 = (content,config) => {
     return hashHex.slice(0, config.keyCount);
 }
 
-const translate = (zhs,lang) => {
-    const translator = new Translator({from: 'zh-CN', to: lang, forceBatch: false});
+const translate = (zhs,lang,config) => {
+    const translator = getTranslator(config,{from: 'zh-CN', to: lang, forceBatch: false})
     return translator.translate(zhs)
         .then((res) =>res.map(item=>item.text))
 }
@@ -36,18 +36,6 @@ function ensureFileExists(filePath, content = '') {
   } catch (err) {
     console.error('创建文件失败：', err);
   }
-}
-
-const extractZhText=(config)=>{
-    const i18nLocales = path.resolve(process.cwd(), config.localePath)
-    const zhJsonPath = path.join(i18nLocales, 'zh-CN.json')
-    ensureFileExists(zhJsonPath)
-    const nextzh = {}
-    for (const zh of zhSet) {
-        const key = getContentMd5(zh,config)
-        nextzh[key] = zh
-    }
-    fs.writeFileSync(zhJsonPath, JSON.stringify(nextzh, null, 2))
 }
 
 const updateLangFile = async (config,lang) => {
@@ -73,26 +61,20 @@ const updateLangFile = async (config,lang) => {
             })
         }
     }
-    try {
-        if(!config.onlyExtract){
-            const result = await translate(untranslates.map(t => t.zh),lang)
-            untranslates.forEach((item, index) => {
-                toJson[item.key] = result[index]
-            })
-        }
-        const nextzh = {}
-        const nexten = {}
-        keys.forEach(key => {
-            nextzh[key] = zhJson[key]
-            nexten[key] = toJson[key]
+    if(!config.onlyExtract && untranslates.length > 0){
+        const result = await translate(untranslates.map(t => t.zh),lang,config)
+        untranslates.forEach((item, index) => {
+            toJson[item.key] = result[index]
         })
-        fs.writeFileSync(toJsonPath, JSON.stringify(nexten, null, 2))
-        fs.writeFileSync(zhJsonPath, JSON.stringify(nextzh, null, 2))
-    } catch (e) {
-        console.error(e)
-        console.log(chalk.redBright('翻译失败，请检查是否没有科学上网？'))
     }
-
+    const nextzh = {}
+    const nexten = {}
+    keys.forEach(key => {
+        nextzh[key] = zhJson[key]
+        nexten[key] = toJson[key]
+    })
+    fs.writeFileSync(toJsonPath, JSON.stringify(nexten, null, 2))
+    fs.writeFileSync(zhJsonPath, JSON.stringify(nextzh, null, 2))
 }
 
 function traverseDirectory(dir, callback) {
@@ -111,7 +93,12 @@ function traverseDirectory(dir, callback) {
 }
 const spinner = ora();
 export async function startTranslate(config){
-    spinner.start(config.onlyExtract?"中文提取中...":"中文提取翻译中，请确保能科学上网...");
+    let startMsg= '中文提取中...'
+    if(!config.onlyExtract){
+        const needLadder =  config.translateBy === 'google';
+        startMsg=needLadder?'中文提取翻译中，请确保能科学上网...':'中文提取翻译中...'
+    }
+    spinner.start(startMsg);
     traverseDirectory(path.resolve(process.cwd(), config.scanPath), (id) => {
     if (id.match(new RegExp(`\.(${config.fileType})$`))) {
             const code = fs.readFileSync(id, 'utf-8')
@@ -122,10 +109,16 @@ export async function startTranslate(config){
             })
         }
     });
-    for(let i=0;i<config.langs.length;i++){
-        await updateLangFile(config,config.langs[i])
+    try{
+        for(let i=0;i<config.langs.length;i++){
+            await updateLangFile(config,config.langs[i])
+        }
+        spinner.stop();
+        console.log(chalk.greenBright('操作成功～'))
+    }catch(e){
+        spinner.stop();
+        console.error(e)
+        console.log(chalk.redBright('翻译失败😔'))
     }
-    spinner.stop();
-    console.log(chalk.greenBright('操作成功～'))
 }
 
