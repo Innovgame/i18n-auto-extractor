@@ -40,6 +40,7 @@ npx i18n-auto-extractor
   "fileType": "vue|ts|js|jsx|tsx",  // 文件类型
   "localePath": "src/locales",  // 语言文件存放路径
   "keyCount": 10,                // 翻译键长度
+  "onlyExtract": false,          // 是否只提取中文不翻译
   "translateBy": "baidu",        // 翻译器类型 baidu | google
   "baidu": {
     "appid": "20241022002182439", // 百度翻译开放平台appid
