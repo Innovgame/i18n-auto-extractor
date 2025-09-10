@@ -43,8 +43,8 @@ npx i18n-auto-extractor
   "onlyExtract": false,          // 是否只提取中文不翻译
   "translateBy": "baidu",        // 翻译器类型 baidu | google
   "baidu": {
-    "appid": "20241022002182439", // 百度翻译开放平台appid
-    "secret": "54E2s423WiHcD7_qLOLx" // 百度翻译开放平台密钥
+    "appid": "xxx", // 百度翻译开放平台appid
+    "secret": "xxx" // 百度翻译开放平台密钥
   }
 }
 ```
