@@ -1,5 +1,6 @@
 <template>
   <h2 @click="$emit('click')">
+    {{$at('你好')}}
   </h2>
   <img
     src="~assets/logo.png"
@@ -7,9 +8,7 @@
 </template>
 
 <script>
-// "browser": "./dist/umd/index.min.js",
 import {$at} from 'i18n-auto-extractor'
-console.log($at,'$at')
 export default {
   props: {
     msg: { type: String }
@@ -17,7 +16,7 @@ export default {
   emits: ['click'],
   setup(props, { emit }) {
     return {
-      $at:()=>{},
+      $at,
       $emit: emit
     }
   }
