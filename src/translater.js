@@ -13,16 +13,6 @@ function getFirstKey(obj) {
   }
 }
 
-export const $at11 = (zhText: string, options?: Record<string, any>) => {
-    const md5Str = CryptoJS.MD5(zhText).toString().slice(0, 10);
-    let text = lang.value === 'en' ? (enJson as any)[md5Str] || zhText : zhText;
-    if (options) {
-        Object.keys(options).forEach(key => {
-            text = text.replace(new RegExp(`\{\\s*${key}\\s*\}`, 'g'), options[key])
-        })
-    }
-    return text
-}
 export const $at = (zhText, options=undefined) => {
     const langSet = globalThis.__CURRENT_LANG_SET__ || {};
     let text = zhText;
