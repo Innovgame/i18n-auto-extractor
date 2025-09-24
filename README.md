@@ -114,6 +114,62 @@ export default {
 }
 ```
 
+### 🖖 Vue2 项目集成
+main.js引入i18nAtPlugin插件
+```js
+import { i18nAtPlugin } from 'i18n-auto-extractor/dist/esm/vue2.mjs'
+
+Vue.use(i18nAtPlugin,{
+  langSet:{
+    lang:'zh-CN', // 可以初始化为其他语言
+    langMap:{}
+  }
+})
+```
+
+```vue
+<template>
+  <div>
+   <div>{{langSet.lang}}</div>
+   <div>{{$at('你好')}}</div>
+   <div>{{$at('确定')}}</div>
+  </div>
+</template>
+<script>
+import enJSON from '../../locales/en'
+
+export default {
+  name: 'App',
+  mounted() {
+    setTimeout(() => {
+     this.setCurrentLang('en',enJSON)
+    }, 3000);
+  }
+}
+</script>
+```
+
+#### 自动导入配置（推荐）
+
+```javascript
+// vite.config.js
+import AutoImport from 'unplugin-auto-import/vite'
+
+export default {
+  plugins: [
+    AutoImport({
+      imports: [
+        {
+          'i18n-auto-extractor': ['$at'] // 自动引入$at函数
+        }
+      ],
+      dts: 'types/auto-import.d.ts',
+      vueTemplate: true
+    })
+  ]
+}
+```
+
 ### ⚛️ React 项目集成
 
 ```jsx

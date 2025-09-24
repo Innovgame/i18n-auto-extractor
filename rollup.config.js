@@ -48,7 +48,30 @@ export default [{
       },
     ],
     plugins,
-},{
+    external: ['js-md5']
+},
+{
+    input: 'src/vue2.js', // 入口文件
+    output: [
+      // ESM 格式 (现代浏览器和打包工具)
+      {
+        dir: 'dist/esm',
+        format: 'esm',
+      //   preserveModules: true, // 保持文件结构
+        entryFileNames: '[name].mjs',
+      },
+      // CommonJS 格式 (Node.js)
+      {
+        dir: 'dist/cjs',
+        format: 'cjs',
+        exports: 'auto', // 自动检测导出方式
+        entryFileNames: '[name].cjs',
+      },
+    ],
+    plugins,
+    external: ['js-md5']
+},
+{
     input: 'src/react.js', // 入口文件
     output: [
       // ESM 格式 (现代浏览器和打包工具)

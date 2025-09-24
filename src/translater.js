@@ -7,6 +7,10 @@ export const setCurrentLang=(lang,langMap)=>{
     };
 }
 
+export const getCurrentLang=()=>{
+    return globalThis.__CURRENT_LANG_SET__ || {lang:'zh-CN',langMap:{}}
+}
+
 function getFirstKey(obj) {
   for (const key in obj) {
     return key;
@@ -14,7 +18,7 @@ function getFirstKey(obj) {
 }
 
 export const $at = (zhText, options=undefined) => {
-    const langSet = globalThis.__CURRENT_LANG_SET__ || {};
+    const langSet = getCurrentLang();
     let text = zhText;
     if(langSet.langMap && langSet.lang && langSet.lang !=='zh-CN'){
         const key = getFirstKey(langSet.langMap) || ''

@@ -13,7 +13,7 @@
     "plugin"
   ],
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "./dist/esm/index.mjs",
   "bin": "./dist/index.js",
   "engines": {
     "node": ">=20.11.1"
@@ -37,6 +37,11 @@
       "import": "./dist/esm/vue.mjs",
       "require": "./dist/cjs/vue.cjs",
       "types": "./dist/types/vue.d.ts"
+    },
+    "./vue2": {
+      "import": "./dist/esm/vue2.mjs",
+      "require": "./dist/cjs/vue2.cjs",
+      "types": "./dist/types/vue2.d.ts"
     },
     "./react": {
       "import": "./dist/esm/react.mjs",
