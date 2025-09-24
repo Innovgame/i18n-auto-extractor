@@ -149,27 +149,6 @@ export default {
 </script>
 ```
 
-#### 自动导入配置（推荐）
-
-```javascript
-// vite.config.js
-import AutoImport from 'unplugin-auto-import/vite'
-
-export default {
-  plugins: [
-    AutoImport({
-      imports: [
-        {
-          'i18n-auto-extractor': ['$at'] // 自动引入$at函数
-        }
-      ],
-      dts: 'types/auto-import.d.ts',
-      vueTemplate: true
-    })
-  ]
-}
-```
-
 ### ⚛️ React 项目集成
 
 ```jsx
