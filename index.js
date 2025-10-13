@@ -174,7 +174,7 @@ async function registerCommands(){
     inputStream
     .on('error',function(error){
       console.error(error)
-      console.log(chalk.redBright('导入失败：请通过--file参数提供csv文件路径！'))
+      console.log(chalk.redBright('导入失败：请通过file参数提供csv文件路径！'))
     })
     .pipe(new CsvReadableStream({asObject: true}))
     .on('data', function (row) {
