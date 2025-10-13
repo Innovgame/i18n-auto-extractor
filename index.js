@@ -2,8 +2,13 @@
 import enquirer from "enquirer";
 import fs from 'node:fs'
 import path from 'node:path'
+import {program} from 'commander'
+import chalk from 'chalk'
+// import {} from 'csv-reader'
+import { createArrayCsvWriter } from 'csv-writer'
 import {langIsoList} from "./lang_iso.js";
 import {startTranslate} from './translate.js'
+import packageJSON from './package.json' with { type: "json" };
 
 const langIsoMap=langIsoList.reduce((pre,item)=>{
     pre[item.name]=item.value
@@ -94,17 +99,70 @@ async function prompt() {
 }
 
 const configPath = path.resolve(process.cwd(), '.i18n_extractor.json')
+
+async function generateConfig(){
+  const answer= await prompt()
+  fs.writeFileSync(configPath,JSON.stringify(answer,null,2))
+  return answer
+}
 /**
  * 检测配置文件，没有需要生成
  */
-async function prepare(){
+async function getConfig(){
     if(!fs.existsSync(configPath)){
-       const answer= await prompt()
-       fs.writeFileSync(configPath,JSON.stringify(answer,null,2))
-       return answer
+       return await generateConfig()
     }
     return JSON.parse(fs.readFileSync(configPath, 'utf-8'))
 }
 
-const config=await prepare()
-startTranslate(config)
+async function registerCommands(){
+   program
+    .name('i18n-auto-extractor')
+    .description('i18n自动化翻译工具')
+    .version(packageJSON.version)
+
+  program
+  .command('init')
+  .description('初始化配置文件')
+  .action(async () => {
+    generateConfig()
+  });
+
+  program
+  .command('at')
+  .description('提取翻译文案')
+  .action(async () => {
+    const config = await getConfig()
+    startTranslate(config)
+  });
+
+  program
+  .command('export')
+  .description('导出翻译结果CSV文件')
+  .action(async () => {
+    const config = await getConfig()
+    const i18nLocales = path.resolve(process.cwd(), config.localePath)
+    const langs=['zh-CN', ...config.langs]
+    const csvPath=path.resolve(i18nLocales, 'i18n.csv')
+    const csvWriter = createArrayCsvWriter({
+      path: csvPath,
+      header: ['hash', ...langs]
+    })
+    const langMap = {}
+    langs.forEach(lang => {
+      if(!langMap[lang]){
+        langMap[lang] = JSON.parse(fs.readFileSync(path.join(i18nLocales, `${lang}.json`), 'utf8')  || '{}')
+      }
+    });
+    const records = []
+    for(const hash in langMap['zh-CN']){
+      records.push([hash,...langs.map(lang=>langMap[lang][hash])])
+    }
+    csvWriter.writeRecords(records) // returns a promise
+    console.log(chalk.greenBright('导出成功，请查看：'), chalk.blueBright(csvPath))
+  });
+  
+  program.parse(process.argv)
+}
+
+await registerCommands()
