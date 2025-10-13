@@ -4,11 +4,10 @@ import fs from 'node:fs'
 import path from 'node:path'
 import {program} from 'commander'
 import chalk from 'chalk'
-// import {} from 'csv-reader'
+import CsvReadableStream from 'csv-reader'
 import { createArrayCsvWriter } from 'csv-writer'
 import {langIsoList} from "./lang_iso.js";
 import {startTranslate} from './translate.js'
-import packageJSON from './package.json' with { type: "json" };
 
 const langIsoMap=langIsoList.reduce((pre,item)=>{
     pre[item.name]=item.value
@@ -119,7 +118,7 @@ async function registerCommands(){
    program
     .name('i18n-auto-extractor')
     .description('i18n自动化翻译工具')
-    .version(packageJSON.version)
+    .version('1.3.0')
 
   program
   .command('init')
@@ -160,6 +159,41 @@ async function registerCommands(){
     }
     csvWriter.writeRecords(records) // returns a promise
     console.log(chalk.greenBright('导出成功，请查看：'), chalk.blueBright(csvPath))
+  });
+
+  program
+  .command('import')
+  .argument('[file]', 'csv文件路径')
+  .description('导入翻译结果csv文件')
+  .action(async (file) => {
+    const config = await getConfig()
+    const i18nLocales = path.resolve(process.cwd(), config.localePath)
+    const csvPath = file || path.resolve(i18nLocales, 'i18n.csv')
+    const inputStream = fs.createReadStream(csvPath, 'utf8');
+    const langMap = {}
+    inputStream
+    .on('error',function(error){
+      console.error(error)
+      console.log(chalk.redBright('导入失败：请通过--file参数提供csv文件路径！'))
+    })
+    .pipe(new CsvReadableStream({asObject: true}))
+    .on('data', function (row) {
+        Object.keys(row).forEach(key=>{
+            if(key !== 'hash'){
+                if(!langMap[key]){
+                    langMap[key] = {}
+                }
+                langMap[key][row.hash] = row[key]
+            }
+        })
+    })
+    .on('end', function () {
+        Object.keys(langMap).forEach(lang=>{
+            const langFile = path.join(i18nLocales,lang+'.json')
+            fs.writeFileSync(langFile,JSON.stringify(langMap[lang],null,2))
+        })
+        console.log(chalk.greenBright('导入成功！'))
+    })
   });
   
   program.parse(process.argv)

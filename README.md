@@ -25,10 +25,11 @@ npm install i18n-auto-extractor
 yarn add i18n-auto-extractor
 ```
 
-### 初始化配置
+### 使用方式
 
+1. 初始化配置文件
 ```bash
-npx i18n-auto-extractor
+npx i18n-auto-extractor init
 ```
 
 这将生成配置文件 `.i18n_extractor.json`：
@@ -47,6 +48,20 @@ npx i18n-auto-extractor
     "secret": "xxx" // 百度翻译开放平台密钥
   }
 }
+```
+2. 提取并翻译文件
+```bash
+npx i18n-auto-extractor at
+```
+
+3. 到出翻译结果CSV文件（可选）
+```bash
+npx i18n-auto-extractor export
+```
+
+4. 矫正csv文件并导入（可选）
+```bash
+npx i18n-auto-extractor import [file] // file可选参数是csv文件路径，默认是上一步导出的csv路径
 ```
 
 ## 🔍 文案提取规则
