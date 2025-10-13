@@ -137,7 +137,7 @@ async function registerCommands(){
 
   program
   .command('export')
-  .description('导出翻译结果CSV文件')
+  .description('导出翻译结果csv文件')
   .action(async () => {
     const config = await getConfig()
     const i18nLocales = path.resolve(process.cwd(), config.localePath)

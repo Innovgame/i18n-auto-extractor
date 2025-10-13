@@ -54,7 +54,7 @@ npx i18n-auto-extractor init
 npx i18n-auto-extractor at
 ```
 
-3. 到出翻译结果CSV文件（可选）
+3. 导出翻译结果CSV文件（可选）
 ```bash
 npx i18n-auto-extractor export
 ```
