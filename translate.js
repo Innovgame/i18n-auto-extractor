@@ -99,15 +99,18 @@ export async function startTranslate(config){
         startMsg=needLadder?'中文提取翻译中，请确保能科学上网...':'中文提取翻译中...'
     }
     spinner.start(startMsg);
-    traverseDirectory(path.resolve(process.cwd(), config.scanPath), (id) => {
-    if (id.match(new RegExp(`\.(${config.fileType})$`))) {
-            const code = fs.readFileSync(id, 'utf-8')
-            const matches = Array.from(code.matchAll(/\$at\(\s*(['"])(.*?)\1/g))
-            if (!matches.length) return
-            matches.forEach((item) => {
-                zhSet.add(item[2])
-            })
-        }
+    const scanPaths = Array.isArray(config.scanPath) ? config.scanPath : [config.scanPath];
+    scanPaths.forEach(scanPath => {
+        traverseDirectory(path.resolve(process.cwd(), scanPath), (id) => {
+            if (id.match(new RegExp(`\.(${config.fileType})$`))) {
+                const code = fs.readFileSync(id, 'utf-8')
+                const matches = Array.from(code.matchAll(/\$at\(\s*(['"])(.*?)\1/g))
+                if (!matches.length) return
+                matches.forEach((item) => {
+                    zhSet.add(item[2])
+                })
+            }
+        });
     });
     try{
         for(let i=0;i<config.langs.length;i++){
