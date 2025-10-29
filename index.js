@@ -28,7 +28,7 @@ async function prompt() {
         type: "text",
         name: "scanPath",
         default: "src",
-        message: "扫描的文件范围：",
+        message: "扫描的文件目录(多个目录用英文逗号分隔)：",
       },
       {
         type: "text",

@@ -99,8 +99,7 @@ export async function startTranslate(config){
         startMsg=needLadder?'中文提取翻译中，请确保能科学上网...':'中文提取翻译中...'
     }
     spinner.start(startMsg);
-    const scanPaths = Array.isArray(config.scanPath) ? config.scanPath : [config.scanPath];
-    scanPaths.forEach(scanPath => {
+    config.scanPath.split(',').forEach(scanPath => {
         traverseDirectory(path.resolve(process.cwd(), scanPath), (id) => {
             if (id.match(new RegExp(`\.(${config.fileType})$`))) {
                 const code = fs.readFileSync(id, 'utf-8')

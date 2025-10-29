@@ -37,7 +37,7 @@ npx i18n-auto-extractor init
 ```json
 {
   "langs": ["en", "fr", "ja"],  // 目标语言列表(ISO代码)
-  "scanPath": "src",            // 扫描目录
+  "scanPath": "src",            // 扫描目录,多个目录英文逗号分隔，例如"src,test"
   "fileType": "vue|ts|js|jsx|tsx",  // 文件类型
   "localePath": "src/locales",  // 语言文件存放路径
   "keyCount": 10,                // 翻译键长度
